@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Gestionnaire perso</title>
+<meta name="theme-color" content="#0e1714">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gestionnaire perso">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== Coffre : écran de code ===== -->
+<section id="lock" class="lock" aria-live="polite">
+  <div class="vault">
+    <div class="disc"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.2" fill="currentColor"/></svg></div>
+    <h1 id="lockTitle">Gestionnaire perso</h1>
+    <p id="lockSub" class="lock-sub">Entre ton code</p>
+    <div class="dots" id="dots"><i></i><i></i><i></i><i></i></div>
+    <p id="lockErr" class="lock-err" role="alert"></p>
+    <div class="pad" id="pad">
+      <button data-d="1">1</button><button data-d="2">2</button><button data-d="3">3</button>
+      <button data-d="4">4</button><button data-d="5">5</button><button data-d="6">6</button>
+      <button data-d="7">7</button><button data-d="8">8</button><button data-d="9">9</button>
+      <button class="ghost" id="forgot" aria-label="Code oublié">?</button><button data-d="0">0</button>
+      <button class="ghost" id="back" aria-label="Effacer"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5H9l-6 7 6 7h11a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"/><path d="M12 9.5l5 5M17 9.5l-5 5"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Application ===== -->
+<main id="app" class="app" hidden>
+  <header class="top">
+    <div class="brand">Gestionnaire perso</div>
+    <div class="top-actions">
+      <button class="icon" id="eye" aria-label="Masquer ou afficher les montants"></button>
+      <button class="icon" id="lockNow" aria-label="Verrouiller"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></button>
+      <button class="icon" id="gear" aria-label="Réglages"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5h0a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    </div>
+  </header>
+
+  <!-- Accueil -->
+  <section id="v-home" class="view">
+    <div class="hero">
+      <p class="eyebrow">Total disponible</p>
+      <p class="total" id="total">0 F</p>
+      <p class="hero-sub" id="heroSub"></p>
+    </div>
+    <div class="cards" id="cards"></div>
+    <div class="today">
+      <div>
+        <p class="t-label">Dépensé aujourd’hui</p>
+        <p class="t-val" id="todayVal">0 F</p>
+      </div>
+      <button class="btn" id="addFromHome">Ajouter une dépense</button>
+    </div>
+  </section>
+
+  <!-- Dépenses -->
+  <section id="v-spend" class="view" hidden>
+    <h2 class="h2">Dépenses</h2>
+    <form id="spendForm" class="form" autocomplete="off">
+      <label class="fld"><span>Montant dépensé (F)</span><input id="sAmt" inputmode="numeric" placeholder="0" required></label>
+      <label class="fld"><span>Pour quoi ? (facultatif)</span><input id="sNote" maxlength="40" placeholder="Transport, repas…"></label>
+      <label class="fld"><span>Date</span><input id="sDate" type="date" required></label>
+      <button class="btn wide" type="submit">Enregistrer la dépense</button>
+      <p class="hint" id="sHint"></p>
+    </form>
+    <div id="spendList"></div>
+  </section>
+
+  <!-- Statistiques -->
+  <section id="v-stats" class="view" hidden>
+    <h2 class="h2">Statistiques</h2>
+    <div class="monthnav"><button class="icon" id="mPrev" aria-label="Mois précédent">‹</button><strong id="mLabel"></strong><button class="icon" id="mNext" aria-label="Mois suivant">›</button></div>
+    <div class="big">
+      <p class="t-label">Total dépensé ce mois</p>
+      <p class="t-val xl" id="mTotal">0 F</p>
+    </div>
+    <div class="mini">
+      <div><p class="t-label">Moyenne par jour</p><p class="mv" id="mAvg">0 F</p></div>
+      <div><p class="t-label">Jour le plus cher</p><p class="mv" id="mMax">—</p></div>
+    </div>
+    <div class="chart" id="chart"></div>
+    <div id="dayList"></div>
+  </section>
+
+  <nav class="tabs" id="tabs">
+    <button data-v="home" class="on"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/></svg>Accueil</button>
+    <button data-v="spend"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10.5h18"/><path d="M7 15h3"/></svg>Dépenses</button>
+    <button data-v="stats"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>Statistiques</button>
+  </nav>
+</main>
+
+<!-- Fenêtre -->
+<div id="sheet" class="sheet" hidden>
+  <div class="sheet-bg" data-close></div>
+  <div class="sheet-box" role="dialog" aria-modal="true" id="sheetBox"></div>
+</div>
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
